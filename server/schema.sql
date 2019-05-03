@@ -5,22 +5,23 @@ USE chat;
 
 /* Create other tables and define schemas for them here! */
 CREATE TABLE users(
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(100)
+  id INT AUTO_INCREMENT,
+  name VARCHAR(100),
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE rooms(
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(100)
+  id INT AUTO_INCREMENT,
+  name VARCHAR(100),
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE messages(
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT,
-  room_id INT,
+  room_name VARCHAR(100),
   text VARCHAR(200),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (room_id) REFERENCES rooms(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 

@@ -30,8 +30,4 @@ if (!module.parent) {
   console.log('Listening on', app.get('port'));
 }
 
-//Handle Post requests
-// app.post('/classes/users', (req, res) => {
-//   req.username
-// })
 

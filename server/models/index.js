@@ -1,27 +1,23 @@
 var db = require('../db');
-var app = require('../app');
-
 module.exports = {
   messages: {
-    get: function () { }, // a function which produces all the messages
-    post: function () { } // a function which can be used to insert a message into the database
+    get: function (cb) {
+      var statement = `SELECT * FROM messages`;
+      db.sqlConnection.query(statement, cb);
+    }, // a function which produces all the messages
+    post: function (data, cb) {
+      var statement = 'INSERT INTO messages(user_id, room_name, text)\
+                        VALUES((SELECT id FROM users WHERE name = ? LIMIT 1),?,?)';
+      db.sqlConnection.query(statement, data, cb);
+    } // a function which can be used to insert a message into the database
   },
 
   users: {
     // Ditto as above.
     get: function () { },
-    post: function () {
-      app.post('/classes/users', (req, res) => {
-        var username = [req.username];
-        var statement = `INSERT INTO users(name) VALUES(?)`;
-        db.sqlConnection.query(statement, username, (err) => {
-          if (err) {
-            throw err;
-          } else {
-            res.write('INSERT INTO USERS TABLE');
-          }
-        });
-      });
+    post: function (data, cb) {
+      var statement = `INSERT INTO users(name) VALUES(?)`;
+      db.sqlConnection.query(statement, data, cb);
     }
   }
 };
